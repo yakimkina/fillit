@@ -3,16 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: enikole <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/08 12:32:44 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/08 12:32:48 by bnigellu         ###   ########.fr       */
+/*   Created: 2019/04/07 15:25:09 by enikole           #+#    #+#             */
+/*   Updated: 2019/04/07 18:36:18 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr(int n)
+void		ft_putnbr(int n)
 {
-	ft_putnbr_fd(n, 1);
+	int		fl;
+
+	fl = 1;
+	if (n < 0)
+	{
+		ft_putchar('-');
+		fl = -1;
+	}
+	if ((n / 10) != 0)
+		ft_putnbr((n / 10) * fl);
+	ft_putchar((n % 10) * fl + 48);
 }

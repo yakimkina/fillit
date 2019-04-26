@@ -3,95 +3,96 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: enikole <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/08 13:00:27 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/11 15:22:56 by bnigellu         ###   ########.fr       */
+/*   Created: 2019/04/07 17:04:27 by enikole           #+#    #+#             */
+/*   Updated: 2019/04/18 16:59:56 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 
-static	size_t		count_words(char const *s, char c)
+static	size_t		ft_kol(char const *s, char c)
 {
-	size_t			i;
-	size_t			k;
-	size_t			l;
+	ssize_t			i;
+	ssize_t			j;
+	size_t			count;
 
-	l = 0;
 	i = 0;
-	while (s[i] != '\0')
+	j = ft_strlen(s) - 1;
+	count = 0;
+	while (s[i] == c)
+		i++;
+	while (s[j] == c && j > 0)
+		j--;
+	while (i <= j)
 	{
-		if ((s[i] == c) || (i == 0))
+		if (s[i] == c)
 		{
-			k = i + 1;
-			while ((s[k] != c) && (s[k] != '\0'))
-				k++;
-			if ((k - i) != 1)
-				l++;
-			i = k;
+			count++;
+			while (s[i] == c)
+				i++;
 		}
-	}
-	return (l);
-}
-
-static	void		word(size_t *k1, size_t *i1, char const *s, char c)
-{
-	while ((s[*i1] == c) && (s[*i1] != '\0'))
-		*i1 = *i1 + 1;
-	*k1 = *i1 + 1;
-	while ((s[*k1] != c) && (s[*k1] != '\0'))
-		*k1 = *k1 + 1;
-}
-
-static	size_t		copy(size_t *i1, char *str, char const *s, size_t *k1)
-{
-	str[*k1 - *i1] = '\0';
-	ft_strncpy(str, &s[*i1], (*k1 - *i1));
-	*i1 = *k1;
-	return (1);
-}
-
-static	void		delete(char **str, size_t k)
-{
-	size_t			i;
-
-	i = 0;
-	while (i < k)
-	{
-		free(str[i]);
-		str[i] = NULL;
 		i++;
 	}
-	free(str);
-	str = NULL;
+	return ((++count));
+}
+
+static	size_t		ft_cpy(char *dst, const char *src, unsigned int n,
+		unsigned int k)
+{
+	dst[n] = '\0';
+	ft_strncpy(dst, src, n);
+	k++;
+	return (k);
+}
+
+static	size_t		ft_check(size_t k, char **arr)
+{
+	if (arr[k] == NULL)
+	{
+		while (k--)
+			free(arr[k]);
+		free(arr);
+		return (1);
+	}
+	return (0);
+}
+
+static	size_t		ft_go(size_t i, size_t j, char const *s, char c)
+{
+	while (s[i + j] == c)
+		j++;
+	j += i;
+	return (j);
 }
 
 char				**ft_strsplit(char const *s, char c)
 {
 	size_t			i;
-	char			**str;
-	size_t			k1;
-	size_t			i1;
+	size_t			j;
+	size_t			k;
+	char			**arr;
 
-	if (s == NULL)
+	if ((k = 0) == 0 && !s)
 		return (NULL);
-	i = 0;
-	i1 = 0;
-	if ((str = (char**)malloc(sizeof(char*) * (count_words(s, c) + 1))) != NULL)
+	if ((arr = (char**)malloc(sizeof(char*) * (ft_kol(s, c) + 1))) == NULL)
+		return (NULL);
+	if (ft_strlen(s) == 0)
+		arr[k++] = NULL;
+	j = 0;
+	while (s[j] != '\0')
 	{
-		while (i < count_words(s, c))
-		{
-			word(&k1, &i1, s, c);
-			if ((str[i] = (char *)ft_memalloc(sizeof(char) * (k1 - i1 + 1)))
-					== NULL)
-			{
-				delete(str, i);
-				return (NULL);
-			}
-			i += copy(&i1, str[i], s, &k1);
-		}
-		str[count_words(s, c)] = NULL;
+		i = 0;
+		while (s[i + j] != c && s[i + j] != '\0')
+			i++;
+		if (i != 0 && (arr[k] = (char*)malloc(i + 1)) != NULL)
+			k = ft_cpy(arr[k], &s[j], i, k);
+		else if (i != 0 && ft_check(k, arr))
+			return (NULL);
+		j = ft_go(i, j, s, c);
 	}
-	return (str);
+	arr[k] = NULL;
+	return (arr);
 }

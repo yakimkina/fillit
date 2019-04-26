@@ -3,29 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: enikole <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/08 12:30:57 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/11 21:26:15 by bnigellu         ###   ########.fr       */
+/*   Created: 2019/04/07 15:51:10 by enikole           #+#    #+#             */
+/*   Updated: 2019/04/10 19:16:02 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 
 char		*ft_strtrim(char const *s)
 {
 	size_t	i;
-	size_t	k;
+	size_t	l;
+	char	*str;
 
-	if (s == NULL)
-		return (NULL);
 	i = 0;
-	while ((s[i] == ' ') || (s[i] == '\n') || (s[i] == '\t'))
+	if (!s)
+		return (NULL);
+	if (ft_strlen(s) == 0)
+		return ((char*)s);
+	l = ft_strlen(s) - 1;
+	while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
 		i++;
-	if (s[i] == '\0')
-		return (ft_strsub(s, i, 0));
-	k = ft_strlen(s) - 1;
-	while ((s[k] == ' ') || (s[k] == '\n') || (s[k] == '\t'))
-		k--;
-	return (ft_strsub(s, i, k - i + 1));
+	while ((s[l] == ' ' || s[l] == '\n' || s[l] == '\t') && i != ft_strlen(s))
+		l--;
+	if ((str = (char*)malloc(sizeof(char) * (l - i + 2))) != NULL)
+	{
+		i = 0;
+		while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
+			i++;
+		str[l - i + 1] = '\0';
+		ft_strncpy(str, &s[i], l - i + 1);
+	}
+	return (str);
 }

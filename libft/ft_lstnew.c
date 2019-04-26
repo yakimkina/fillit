@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: enikole <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/10 16:05:35 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/17 13:02:34 by bnigellu         ###   ########.fr       */
+/*   Created: 2019/04/08 12:29:51 by enikole           #+#    #+#             */
+/*   Updated: 2019/04/10 12:37:42 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 
-t_list			*ft_lstnew(void const *content, size_t content_size)
+t_list		*ft_lstnew(void const *content, size_t content_size)
 {
-	t_list		*tmp;
+	t_list	*tmp;
 
 	if ((tmp = (t_list*)malloc(sizeof(t_list))) != NULL)
 	{
-		if (content == NULL)
+		if (!content)
 		{
 			tmp->content = NULL;
 			tmp->content_size = 0;

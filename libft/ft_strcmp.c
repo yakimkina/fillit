@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: enikole <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/05 17:39:50 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/05 17:46:57 by bnigellu         ###   ########.fr       */
+/*   Created: 2019/04/05 16:54:15 by enikole           #+#    #+#             */
+/*   Updated: 2019/04/11 14:55:05 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int		ft_strcmp(const char *s1, const char *s2)
 {
-	return (ft_memcmp(s1, s2, ft_strlen(s1) + 1));
+	return (ft_strncmp(s1, s2, ft_strlen(s1) + 1));
 }

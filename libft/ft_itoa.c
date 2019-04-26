@@ -3,61 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: enikole <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/08 12:56:29 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/11 15:23:28 by bnigellu         ###   ########.fr       */
+/*   Created: 2019/04/07 13:40:20 by enikole           #+#    #+#             */
+/*   Updated: 2019/04/11 20:48:16 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
+#include <string.h>
 
-static	int		int_len(int n)
+char		*ft_itoa(int n)
 {
-	int			l;
+	int		fl;
+	int		k;
+	int		nb;
+	char	*str;
 
-	l = 0;
-	if (n <= 0)
-		l++;
-	while (n != 0)
+	fl = 1;
+	k = 1;
+	nb = n;
+	while ((nb /= 10) != 0)
+		k++;
+	if (n < 0 && k++)
+		fl = -1;
+	str = (char*)malloc(sizeof(char) * (k + 1));
+	if (str != NULL)
 	{
-		if (n < 0)
-		{
-			n = n / 10;
-			n = n * (-1);
-		}
-		else
-			n = n / 10;
-		l++;
-	}
-	return (l);
-}
-
-char			*ft_itoa(int n)
-{
-	int			l;
-	char		*str;
-
-	l = int_len(n);
-	if ((str = (char *)ft_memalloc(sizeof(char) * ((size_t)l + 1))) != NULL)
-	{
-		if (n == 0)
-			str[0] = '0';
-		while (n != 0)
-		{
-			if (n < 0)
-			{
-				str[--l] = (-1) * (n % 10) + 48;
-				n = n / 10;
-				n = n * (-1);
-				str[0] = '-';
-			}
-			else
-			{
-				str[--l] = n % 10 + 48;
-				n = n / 10;
-			}
-		}
+		str[k] = '\0';
+		str[--k] = fl * (n % 10) + 48;
+		while (k-- && (n /= 10) != 0)
+			str[k] = fl * (n % 10) + 48;
+		if (fl == -1)
+			str[k] = '-';
 	}
 	return (str);
 }

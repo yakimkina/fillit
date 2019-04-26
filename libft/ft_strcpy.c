@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: enikole <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/05 17:49:20 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/08 13:33:32 by bnigellu         ###   ########.fr       */
+/*   Created: 2019/04/05 17:36:39 by enikole           #+#    #+#             */
+/*   Updated: 2019/04/11 14:52:29 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strcpy(char *dst, const char *src)
+char		*ft_strcpy(char *dst, const char *src)
 {
-	return ((char *)ft_memmove(dst, src, ft_strlen(src) + 1));
+	return (ft_memmove((void*)dst, (const void*)src, ft_strlen(src) + 1));
 }

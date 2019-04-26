@@ -6,7 +6,7 @@
 /*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 13:08:59 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/26 18:52:29 by bnigellu         ###   ########.fr       */
+/*   Updated: 2019/04/26 20:25:46 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,20 @@
 # include "libft/includes/libft.h"
 # include <stdio.h>
 
-int		lesen(int fd, t_list **list);
+typedef		struct		s_index
+{
+	int					i;
+	int					j;
+}						t_index;
 
-void	list_free(t_list **alst);
-t_list	**lst_end_add(t_list **alst, int alfa);
+int						lesen(int fd, t_list **list);
 
-void	alg(int amt, t_list **list);
-void	make_map(char ***map, int sz);
-int		try_map(int sz, char **map, t_list *list);
-void	del_map(char **map, t_list *list, int i, int j);
-void	fill_map(char **map, t_list *list, int i, int j);
-int		size_of_map(int n);
+void					list_free(t_list **alst);
+t_list					**lst_end_add(t_list **alst, int alfa);
+
+int						size_of_map(int n);
+int						free_map(char ***map, int i);
+
+int						alg(int amt, t_list **list);
 
 #endif

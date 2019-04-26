@@ -6,169 +6,107 @@
 /*   By: enikole <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:39:57 by enikole           #+#    #+#             */
-/*   Updated: 2019/04/26 18:08:45 by enikole          ###   ########.fr       */
+/*   Updated: 2019/04/26 20:33:27 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int			size_of_map(int n)
+static	int		fill_map(char **map, t_list *list, t_index ind, char c)
 {
-	int		i;
+	t_index		del;
+	int			k;
 
-	i = 2;
-	while (i * i < n)
-		i += 1;
-	return (i);
-}
-
-void		fill_map(char **map, t_list *list, int i, int j)
-{
-	int		del_i;
-	int		del_j;
-	int		k;
-
-	del_i = ((int*)(list->content))[1] - i;
-	del_j = ((int*)(list->content))[2] - j;
+	del.i = ((int*)(list->content))[1] - ind.i;
+	del.j = ((int*)(list->content))[2] - ind.j;
 	k = 2;
 	while (k++ < 8)
 	{
-		map[i][j] = ((char*)(list->content))[0];
-//		ft_putchar(map[i][j]);
-		i = ((int*)(list->content))[k] - del_i;
-		j = ((int*)(list->content))[++k] - del_j;
+		map[ind.i][ind.j] = c;
+		ind.i = ((int*)(list->content))[k] - del.i;
+		ind.j = ((int*)(list->content))[++k] - del.j;
 	}
-	map[i][j] = ((char*)(list->content))[0];
-	if (map[i][j] == 'A')
-		ft_putchar('A');
-//	ft_putchar(map[i][j]);
-//	ft_putchar('\n');
+	map[ind.i][ind.j] = c;
+	return (1);
 }
 
-void		del_map(char **map, t_list *list, int i, int j)
+static	int		try_elem(t_list *list, t_index ind, char **map, int sz)
 {
-	int		del_i;
-	int		del_j;
-	int		k;
+	t_index		del;
+	int			k;
 
-	del_i = ((int*)(list->content))[1] - i;
-	del_j = ((int*)(list->content))[2] - j;
 	k = 2;
-	while (k++ < 8)
+	del.i = ((int*)(list->content))[1] - ind.i;
+	del.j = ((int*)(list->content))[2] - ind.j;
+	while (ind.i < sz && ind.i >= 0 && ind.j < sz && ind.j >= 0 &&
+			map[ind.i][ind.j] == '.' && k++ < 8)
 	{
-		map[i][j] = '.';
-		i = ((int*)(list->content))[k] - del_i;
-		j = ((int*)(list->content))[++k] - del_j;
+		ind.i = ((int*)(list->content))[k] - del.i;
+		ind.j = ((int*)(list->content))[++k] - del.j;
 	}
-	map[i][j] = '.';
+	return (k);
 }
 
-int			try_map(int sz, char **map, t_list *list)
+static	int		try_map(int sz, char **map, t_list *list)
 {
-	int		i;
-	int		j;
-	int		i1;
-	int		j1;
-	int		k;
-	int		del_i;
-	int		del_j;
+	t_index		ind;
+	int			k;
 
-	j = -1;
-//	ft_putnbr(sz);
-//	ft_putendl(" = sz");
-	while (++j < sz)
-	{
-		i = -1;
-		while (++i < sz)
+	ind.j = -1;
+	while (++ind.j < sz && (ind.i = -1))
+		while (++ind.i < sz)
 		{
-//			ft_putnbr(i);
-//			ft_putendl(" = i");
-//			ft_putnbr(j);
-//			ft_putendl(" = j");
-			i1 = i;
-			j1 = j;
-			del_i = ((int*)(list->content))[1] - i1;
-			del_j = ((int*)(list->content))[2] - j1;
-//			ft_putnbr(del_i);
-//			ft_putendl(" = del_i");
-//			ft_putnbr(del_j);
-//			ft_putendl(" = del_j");
-			k = 2;
-			while (i1 < sz && i1 >= 0 && j1 < sz &&
-					j1 >= 0 && map[i1][j1] == '.' && k++ < 8)
-			{
-	//			ft_putendl("HEAR");
-				i1 = ((int*)(list->content))[k] - del_i;
-				j1 = ((int*)(list->content))[++k] - del_j;
-//				ft_putnbr(i1);
-//				ft_putendl(" = i1");
-//				ft_putnbr(j1);
-//				ft_putendl(" = j1");
-			}
+			k = try_elem(list, ind, map, sz);
 			if (k == 9 && list->next == NULL)
-			{
-				fill_map(map, list, i, j);
-				return (1);
-			}
+				return (fill_map(map, list, ind, ((char*)(list->content))[0]));
 			else if (k == 9)
 			{
-				fill_map(map, list, i, j);
-//				ft_putendl("STOIIIIII");
+				fill_map(map, list, ind, ((char*)(list->content))[0]);
 				if (!(try_map(sz, map, list->next)))
-					del_map(map, list, i, j);
+					fill_map(map, list, ind, '.');
 				else
 					return (1);
 			}
 		}
-	}
-//	ft_putendl("END OF ITARATION");
 	return (0);
 }
 
-void		make_map(char ***map, int sz)
+static	int		make_map(char ***map, int sz)
 {
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
-	*map = (char **)malloc(sizeof(char *) * sz);
+	if (!(*map = (char **)malloc(sizeof(char *) * sz)))
+		return (0);
 	i = sz;
 	while (i--)
 	{
-		(*map)[i] = (char *)malloc(sizeof(char) * sz);
+		if (!((*map)[i] = (char *)malloc(sizeof(char) * sz)))
+			return (free_map(map, i));
 		j = sz;
 		while (j--)
-		{
 			(*map)[i][j] = '.';
-			ft_putchar((*map)[i][j]);
-		}
-		ft_putchar('\n');
 	}
+	return (1);
 }
 
-void		alg(int amt, t_list **list)
+int				alg(int amt, t_list **list)
 {
-	char	**map;
-	int		sz;
-	int		i;
-	int		j;
-	char	c;
+	char		**map;
+	int			sz;
+	int			i;
+	int			j;
 
 	sz = size_of_map(amt * 4);
-//	ft_putnbr(sz);
-//	ft_putendl(" = sz");
-	make_map(&map, sz);
-	ft_putendl("MAP OK");
+	if (!(make_map(&map, sz)))
+		return (0);
 	while (!(try_map(sz, map, (*list))))
 	{
-		i = sz;
-		ft_putendl("uuuuuuuuvelichenie");
-		while (i--)
-			free(map[i]);
+		free_map(&map, sz);
 		sz++;
-		make_map(&map, sz);
+		if (!(make_map(&map, sz)))
+			return (0);
 	}
-	ft_putendl("TRY MAP OK");
-	ft_putchar('\n');
 	j = -1;
 	while (++j < sz)
 	{
@@ -177,4 +115,6 @@ void		alg(int amt, t_list **list)
 			ft_putchar(map[i][j]);
 		ft_putchar('\n');
 	}
+	free_map(&map, sz);
+	return (1);
 }

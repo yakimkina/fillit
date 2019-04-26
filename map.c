@@ -1,18 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enikole <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/04 11:31:21 by enikole           #+#    #+#             */
-/*   Updated: 2019/04/11 14:56:46 by enikole          ###   ########.fr       */
+/*   Created: 2019/04/26 20:15:04 by enikole           #+#    #+#             */
+/*   Updated: 2019/04/26 20:20:38 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isalpha(int c)
+#include "fillit.h"
+
+int				size_of_map(int n)
 {
-	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
-		return (1);
+	int			i;
+
+	i = 2;
+	while (i * i < n)
+		i += 1;
+	return (i);
+}
+
+int				free_map(char ***map, int i)
+{
+	while (i--)
+		free((*map)[i]);
+	free((*map));
 	return (0);
 }

@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bzero.c                                            :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: enikole <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/03 20:43:29 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/08 12:15:16 by bnigellu         ###   ########.fr       */
+/*   Created: 2019/04/03 20:40:08 by enikole           #+#    #+#             */
+/*   Updated: 2019/04/11 13:38:56 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-
 #include "libft.h"
 
-void		ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, size_t n)
 {
-	void	*str;
-
-	str = ft_memset(s, '\0', n);
+	s = ft_memset(s, 0, n);
 }

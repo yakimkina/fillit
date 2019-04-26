@@ -3,37 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: enikole <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/03 20:08:36 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/08 15:21:39 by bnigellu         ###   ########.fr       */
+/*   Created: 2019/04/03 19:57:56 by enikole           #+#    #+#             */
+/*   Updated: 2019/04/18 19:11:22 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int				ft_atoi(const char *str)
+int					ft_atoi(const char *str)
 {
-	long	int	i;
-	long	int	res;
-	long	int	sign;
+	int				i;
+	long	int		nb;
 
-	sign = 1;
-	res = 0;
-	i = 0;
-	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\r' || str[i] == '\f'
-			|| str[i] == '\t' || str[i] == '\v' || str[i] == '\b')
-		i++;
-	if (str[i] == '-')
-		sign = -1;
-	else if (str[i] != '+')
-		i--;
-	while ((str[++i] >= '0') && (str[i] <= '9'))
+	i = 1;
+	nb = 0;
+	while (*str == 32 || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '-' || *str == '+')
 	{
-		if ((res < 0 && sign == 1) || (res != res * 10 / 10 && sign == 1))
-			return (-1);
-		else if ((res < 0 && sign == -1) || (res != res * 10 / 10
-					&& sign == -1))
-			return (0);
-		res = res * 10 + (str[i] - 48);
+		if (*str == '-')
+			i = -1;
+		str++;
 	}
-	return ((int)res * sign);
+	while (*str >= 48 && *str <= 57)
+	{
+		if (i > 0 && nb != (nb * 10 + (*str - 48)) / 10)
+			return (-1);
+		else if (i < 0 && nb != (nb * 10 + (*str - 48)) / 10)
+			return (0);
+		nb = nb * 10 + (*str - 48);
+		str++;
+	}
+	return ((int)(i * nb));
 }
