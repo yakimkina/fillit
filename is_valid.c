@@ -6,7 +6,7 @@
 /*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 13:07:24 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/26 15:30:04 by bnigellu         ###   ########.fr       */
+/*   Updated: 2019/04/26 16:43:34 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ int				lesen(int fd, t_list **list)
 	while ((ret = read(fd, buf, 21)))
 	{
 		ret2 = ret;
-		buf[21] = '\0';
+		buf[ret] = '\0';
 //		ft_putstr("ret = ");
 //		ft_putnbr(ret);
 //		write(1, "\n", 1);
@@ -243,10 +243,7 @@ int				main(int n, char **str)
 	if (les == 0)
 		ft_putendl("error");
 	else
-	{
-		ft_putnbr(les);
-		write(1, "\n", 1);
-	}
+		alg(les, &l);
 	close (fd);
 	return (0);
 }
