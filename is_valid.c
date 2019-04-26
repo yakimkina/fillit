@@ -6,13 +6,13 @@
 /*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 13:07:24 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/25 17:18:00 by bnigellu         ###   ########.fr       */
+/*   Updated: 2019/04/26 15:30:04 by bnigellu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void			list_free(t_list **alst)
+int				list_free(t_list **alst)
 {
 	t_list		*list;
 	t_list		*nxt;
@@ -29,6 +29,7 @@ void			list_free(t_list **alst)
 	}
 	free(list->content);
 	free(list);
+	return (1);
 }
 
 t_list			**lst_end_add(t_list **alst, int alfa)
@@ -207,11 +208,9 @@ int				lesen(int fd, t_list **list)
 //		write(1, "\n", 1);
 //		ft_putstr(buf);
 //		write(1, "\n", 1);
-		if (alfa == '[' || fullen(lst_end_add(list, alfa), buf) == 0)
-		{
-			list_free(list);
+		if ((alfa == '[' || fullen(lst_end_add(list, alfa), buf) == 0) &&
+				list_free(list) == 1)
 			return (0);
-		}
 		alfa++;
 //		ft_putchar(buf[20]);
 //		write(1, "\n", 1);
@@ -223,7 +222,7 @@ int				lesen(int fd, t_list **list)
 //	write(1, "\n", 1);
 	free(buf);
 	if (ret2 == 20)
-		return (1);
+		return (alfa - 'A');
 	return (0);
 }
 
@@ -231,7 +230,7 @@ int				main(int n, char **str)
 {
 	int			fd;
 	t_list		*l;
-
+	int			les;
 	if (n != 2)
 	{
 		ft_putendl("usage: ./fillit source_file");
@@ -240,8 +239,14 @@ int				main(int n, char **str)
 	fd = open(str[1], O_RDONLY);
 	if (fd == -1)
 		return (0);
-	if (lesen(fd, &l) == 0)
+	les = lesen(fd, &l);
+	if (les == 0)
 		ft_putendl("error");
+	else
+	{
+		ft_putnbr(les);
+		write(1, "\n", 1);
+	}
 	close (fd);
 	return (0);
 }
