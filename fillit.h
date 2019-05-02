@@ -6,7 +6,7 @@
 /*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 13:08:59 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/26 20:25:46 by enikole          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:40:33 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "libft/includes/libft.h"
 # include <stdio.h>
 
-typedef		struct		s_index
+typedef struct			s_index
 {
 	int					i;
 	int					j;

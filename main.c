@@ -6,7 +6,7 @@
 /*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 18:33:16 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/26 20:14:57 by enikole          ###   ########.fr       */
+/*   Updated: 2019/05/01 17:47:53 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int			main(int n, char **str)
 	fd = open(str[1], O_RDONLY);
 	if (fd == -1)
 		return (0);
+	l = NULL;
 	les = lesen(fd, &l);
 	if (les == 0 || !(alg(les, &l)))
 		ft_putendl("error");

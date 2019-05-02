@@ -6,7 +6,7 @@
 /*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 13:07:24 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/26 18:42:40 by bnigellu         ###   ########.fr       */
+/*   Updated: 2019/05/01 17:53:04 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int				lesen(int fd, t_list **list)
 	if ((buf = (char*)malloc(sizeof(char) * 22)) == NULL)
 		return (0);
 	alfa = 'A';
+	ret2 = 0;
 	while ((ret = read(fd, buf, 21)))
 	{
 		ret2 = ret;

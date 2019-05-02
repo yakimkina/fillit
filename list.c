@@ -6,7 +6,7 @@
 /*   By: bnigellu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 18:38:11 by bnigellu          #+#    #+#             */
-/*   Updated: 2019/04/26 18:50:40 by bnigellu         ###   ########.fr       */
+/*   Updated: 2019/05/01 18:00:14 by enikole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void			list_free(t_list **alst)
 	t_list		*list;
 	t_list		*nxt;
 
+	if ((*alst) == NULL)
+		return ;
 	list = (*alst);
 	while (list->next != NULL)
 	{
